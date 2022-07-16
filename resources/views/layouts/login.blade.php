@@ -22,12 +22,12 @@
 <body>
     <header>
         <div id = "head">
-        <h1><a><img src="images/logo.png"></a></h1>
-            <div id="">
-                <div id="">
-                    <p>〇〇さん<img src="images/arrow.png"></p>
+        <h1><a><img src="images/main_logo.png"></a></h1>
+            <div id="iconList">
+                <div id="icon">
+                    <p>〇〇さん<img class="profileIcon" src="images/dawn.png"></p>
                 <div>
-                <ul>
+                <ul class="pulldown">
                     <li><a href="/top">ホーム</a></li>
                     <li><a href="/profile">プロフィール</a></li>
                     <li><a href="/logout">ログアウト</a></li>

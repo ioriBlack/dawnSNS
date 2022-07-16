@@ -8,6 +8,14 @@ header{
     background:#3C4767;
 }
 
+#head {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+.profileIcon {
+    border-radius: 30px;
+}
 /* main content */
 #row{
     display: flex;
