@@ -20,7 +20,7 @@
 
 
 //ログアウト中のページ
-Route::get('/login', 'Auth\LoginController@login');
+Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 
 Route::get('/register', 'Auth\RegisterController@register');
@@ -35,6 +35,8 @@ Route::get('/createForm','PostsController@createForm');
 Route::post('post/create','PostsController@create');
 Route::get('posts/{id}/update-form', 'PostsController@updateForm');
 Route::post('post/update','PostsController@update');
+Route::get('post/{id}/delete','PostsController@delete');
+Route::get('/followerList','PostsController@followerList');
 
 Route::get('/top','PostsController@index');
 

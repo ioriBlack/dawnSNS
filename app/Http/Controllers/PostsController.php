@@ -9,6 +9,12 @@ use Auth;
 
 class PostsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     //
     public function index(){
         //return view('posts.index');
@@ -21,6 +27,23 @@ class PostsController extends Controller
     //    public function create()
     // {
     //         return view('post.create');
+    // }
+
+
+    public function followerList()
+    {
+        $followers = DB::table('follows')->get();
+        return view('follows.followerList',['follows' => $followers]);
+    }
+
+    // public function follower(Request $request)
+    // {
+    //     $follower = $request->input('newFollower');
+    //     DB::table('follows')->insert([
+    //     'follows' => $followers,
+    //     ]);
+
+    //     return redirect('/followerList');
     // }
 
     public function createForm()
@@ -58,6 +81,15 @@ class PostsController extends Controller
                 ['posts' => $up_post]
             );
 
-        return redirect('/index');
+        return redirect('/top');
+    }
+
+        public function delete($id)
+    {
+        DB::table('posts')
+            ->where('id', $id)
+            ->delete();
+
+        return redirect('/top');
     }
 }

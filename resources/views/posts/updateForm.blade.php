@@ -19,9 +19,6 @@
             {!! Form::hidden('id', $post->id) !!}
             {!! Form::input('text', 'upPost', $post->posts, ['required', 'class' => 'form-control']) !!}
 
-            ['required', 'class' => 'form-control']) !!}
-            ['required', 'class' => 'form-control', 'placeholder' => '投稿内容']) !!}
-
         </div>
         <button type="submit" class="btn btn-primary pull-right">更新</button>
         {!! Form::close() !!}
