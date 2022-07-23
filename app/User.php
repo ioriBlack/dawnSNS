@@ -9,13 +9,20 @@ use Laravel\Passport\HasApiTokens;
 class User extends Authenticatable
 {
     use Notifiable;
-        public function posts() {
-        return $this->hasMany('App\Post');
-        }
 
-        public function follow() {
-        return $this->hasMany('App\Follow');
-        }
+        public function posts()
+    {
+        //return $this->belongsToMany('App/Post');
+        return $this->belongsToMany(Post::class);
+    }
+
+    public function follows()
+    {
+        //return $this->belongsToMany('App/follow');
+        return $this->belongsToMany(self::class,'follows','follower','follow');
+    }
+
+
     /**
      * The attributes that are mass assignable.
      *

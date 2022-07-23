@@ -21,17 +21,19 @@
 </head>
 <body>
     <header>
-        <div id = "head">
-        <h1><a><img src="images/main_logo.png"></a></h1>
+    <div id = "head">
+        <h1><a href="/top"><img src="images/main_logo.png"></a></h1>
             <div id="iconList">
                 <div id="icon">
                     <p>〇〇さん<img class="profileIcon" src="images/dawn.png"></p>
                 <div>
-                <ul class="pulldown">
-                    <li><a href="/top">ホーム</a></li>
-                    <li><a href="/profile">プロフィール</a></li>
-                    <li><a href="/logout">ログアウト</a></li>
-                </ul>
+                <div class="pulldown-wrapper">
+                    <ul class="pulldown">
+                        <li><a href="/top">ホーム</a></li>
+                        <li><a href="/profile">プロフィール</a></li>
+                        <li><a href="/logout">ログアウト</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </header>
@@ -46,12 +48,12 @@
                 <p>フォロー数</p>
                 <p>〇〇名</p>
                 </div>
-                <p class="btn"><a href="/followerList">フォローリスト</a></p>
+                <p class="btn"><a href="">フォローリスト</a></p>
                 <div>
                 <p>フォロワー数</p>
                 <p>〇〇名</p>
                 </div>
-                <p class="btn"><a href="">フォロワーリスト</a></p>
+                <p class="btn"><a href="/followerList">フォロワーリスト</a></p>
             </div>
             <p class="btn"><a href="">ユーザー検索</a></p>
         </div>

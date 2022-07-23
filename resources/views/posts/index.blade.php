@@ -1,19 +1,6 @@
 @extends('layouts.login')
 
 @section('content')
-<h2>機能を実装していきましょう。</h2>
-<p class="pull-right"><a class="btn btn-success" href="/createForm">投稿する</a></p>
-
-
-<div class="container">
-  <div class="btn-wrapper">
-    <from action="createForm" method="post" class="createBtn">
-      <img src="images/post.png">
-    </from>
-  </div>
-</div>
-
-
 <head>
     <meta charset='utf-8"'>
     <link rel='stylesheet' href="{{ asset('/css/app.css') }}">
@@ -21,6 +8,17 @@
 </head>
 
     <div class='container'>
+        <div class="container">
+          <div class="btn-wrapper">
+            <a class="" href="/createForm">
+              <img src="images/post.png">
+            </a>
+            <!-- <from action="createForm" method="post" class="createBtn">
+              <img src="images/post.png">
+            </from> -->
+          </div>
+        </div>
+
         <h2 class='page-header'>投稿一覧</h2>
         <table class='table table-hover'>
             <tr>

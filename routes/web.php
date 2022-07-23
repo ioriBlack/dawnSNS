@@ -37,6 +37,7 @@ Route::get('posts/{id}/update-form', 'PostsController@updateForm');
 Route::post('post/update','PostsController@update');
 Route::get('post/{id}/delete','PostsController@delete');
 Route::get('/followerList','PostsController@followerList');
+Route::post('post/follower','PostsController@follower');
 
 Route::get('/top','PostsController@index');
 

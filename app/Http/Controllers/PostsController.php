@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Follow;
 use Illuminate\Support\Facades\DB;
 use Auth;
 
@@ -32,19 +33,18 @@ class PostsController extends Controller
 
     public function followerList()
     {
-        $followers = DB::table('follows')->get();
-        return view('follows.followerList',['follows' => $followers]);
+        $follows = DB::table('follows')->get();
+        return view('follows.followerList',['follows' => $follows]);
     }
 
-    // public function follower(Request $request)
-    // {
-    //     $follower = $request->input('newFollower');
-    //     DB::table('follows')->insert([
-    //     'follows' => $followers,
-    //     ]);
+    public function follower(Request $request)
+    {
+        $follows = $request->input('newFollower');
+        DB::table('follows')->insert(
+            ['follows' => $follows]);
 
-    //     return redirect('/followerList');
-    // }
+        return redirect('/followerList');
+    }
 
     public function createForm()
     {
