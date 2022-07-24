@@ -34,10 +34,14 @@ Route::get('/added', 'Auth\RegisterController@added');
 Route::get('/createForm','PostsController@createForm');
 Route::post('post/create','PostsController@create');
 Route::get('posts/{id}/update-form', 'PostsController@updateForm');
+
 Route::post('post/update','PostsController@update');
 Route::get('post/{id}/delete','PostsController@delete');
+
 Route::get('/followerList','PostsController@followerList');
-Route::post('post/follower','PostsController@follower');
+Route::get('follows/{id}/follow','PostsController@follower');
+//Route::post('post/follower','PostsController@follower');
+Route::get('follows/{id}/to_follow','PostsController@follower');
 
 Route::get('/top','PostsController@index');
 
@@ -45,5 +49,10 @@ Route::get('/profile','UsersController@profile');
 
 Route::get('/search','UsersController@index');
 
-Route::get('/follow-list','PostsController@index');
-Route::get('/follower-list','PostsController@index');
+Route::get('/followList','PostsController@database');
+
+// Route::get('/follow-list','PostsController@index');
+// Route::get('/follower-list','PostsController@index');
+
+// Route::get('/followerList','PostsController@index');
+// Route::get('do_Follow','PostsController@doFollow');

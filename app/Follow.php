@@ -11,13 +11,13 @@ class Follow extends Model
 
     public function users()
     {
-        //$this->belongsToMany('App/User');
-        $this->belongsToMany(User::class);
+        $this->belongsToMany('App/User');
+        //$this->belongsToMany(User::class);
     }
 
     public function posts()
     {
-        //$this->belongsToMany('App/Post');
-        $this->belongsToMany(Post::class);
+        $this->belongsToMany('App/Post');
+         //$this->belongsToMany(Post::class);
     }
 }

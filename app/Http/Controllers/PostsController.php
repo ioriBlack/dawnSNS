@@ -33,15 +33,21 @@ class PostsController extends Controller
 
     public function followerList()
     {
-        $follows = DB::table('follows')->get();
-        return view('follows.followerList',['follows' => $follows]);
+        $followers = DB::table('follows')->get();
+        return view('follows.followerList',['followers' => $followers]);
     }
 
     public function follower(Request $request)
     {
         $follows = $request->input('newFollower');
         DB::table('follows')->insert(
-            ['follows' => $follows]);
+        [
+         'id' => Auth::id(),
+         'follow_id' => Auth::id(),
+         'follower_id' => Auth::id(),
+         'user_id' => Auth::id(),
+         'username' => $follows,
+        ]);
 
         return redirect('/followerList');
     }
@@ -58,6 +64,7 @@ class PostsController extends Controller
             'user_id' => Auth::id(),
             'posts' => $post,
             'created_at' => now(),
+            'follows_id' =>Auth::id(),
         ]);
 
         return redirect('/createForm');
@@ -92,4 +99,14 @@ class PostsController extends Controller
 
         return redirect('/top');
     }
+
+    //     public function index(Post $user)
+    // {
+    //         $user = new User;
+    // $all_users = $user->getAllUsers(auth()->user()->id);
+
+    //     return view('posts.index', [
+    //         'all_users'  => $all_users
+    //     ]);
+    // }
 }

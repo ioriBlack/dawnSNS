@@ -11,13 +11,13 @@ class Post extends Model
 
     public function user()
     {
-        //return $this->hasMany('App/User');
-        return $this->hasMany(User::class);
+        return $this->hasMany('App/User');
+        //return $this->hasMany(User::class);
     }
 
     public function follow()
     {
-        //return $this->belongsTo('App/Follow');
-        return $this->belongsTo(Follow::class);
+        return $this->belongsTo('App/Follow');
+        //return $this->belongsTo(Follow::class);
     }
 }
