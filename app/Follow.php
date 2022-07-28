@@ -9,15 +9,15 @@ class Follow extends Model
     //
     use Notifiable;
 
-    public function users()
+    public function user()
     {
-        $this->belongsToMany('App/User');
-        //$this->belongsToMany(User::class);
+        //$this->belongsToMany('App/User');
+        $this->belongsToMany(User::class);
     }
 
     public function posts()
     {
-        $this->belongsToMany('App/Post');
-         //$this->belongsToMany(Post::class);
+        // $this->belongsToMany('App/Post');
+        $this->belongsToMany(Post::class);
     }
 }

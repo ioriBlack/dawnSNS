@@ -25,6 +25,11 @@ class PostsController extends Controller
         return view('posts.index',['posts'=>$posts]);
     }
 
+    public function users(){
+        $users = DB::table('users')->get();
+        return view('posts.index',['users'=>$users]);
+    }
+
     //    public function create()
     // {
     //         return view('post.create');
@@ -39,14 +44,15 @@ class PostsController extends Controller
 
     public function follower(Request $request)
     {
-        $follows = $request->input('newFollower');
+        //$follows = $request->input('newFollower');
+        $username = DB::table('users')->get();
         DB::table('follows')->insert(
         [
          'id' => Auth::id(),
          'follow_id' => Auth::id(),
          'follower_id' => Auth::id(),
          'user_id' => Auth::id(),
-         'username' => $follows,
+         'username' => Auth::id(),
         ]);
 
         return redirect('/followerList');

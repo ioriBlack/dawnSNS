@@ -5,7 +5,7 @@
 {!! Form::open() !!}
 
 <p>DAWNSNSへようこそ</p>
-
+<div class="login-wrapper">
 {{ Form::label('e-mail') }}
 {{ Form::text('mail',null,['class' => 'input']) }}
 {{ Form::label('password') }}
@@ -16,5 +16,5 @@
 <p><a href="/register">新規ユーザーの方はこちら</a></p>
 
 {!! Form::close() !!}
-
+</div>
 @endsection
