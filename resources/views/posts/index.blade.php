@@ -29,14 +29,11 @@
             <th></th>
             <th></th>
 
-            </tr>
-            @foreach ($users as $user)
+            @foreach($posts as $post)
             <tr>
-              <td>{{ $user->images }}</td>
-            </tr>
-            @foreach ($posts as $post)
-            <tr>
-                <td></td>
+                <td>
+                  <img src="/images/{{ $post->images }}" alt="image">
+                </td>
                 <td>{{ $post->posts }}</td>
                 <td>{{ $post->created_at }}</td>
 

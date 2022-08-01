@@ -25,7 +25,7 @@
         <h1><a href="/top"><img src="images/main_logo.png"></a></h1>
             <div id="iconList">
                 <div id="icon">
-                    <p>〇〇さん<img class="profileIcon" src="images/dawn.png"></p>
+                    <p><?php $users = Auth::user(); ?>{{$users->username}}さん<img class="profileIcon" src="images/dawn.png"></p>
                 <div>
                 <div class="pulldown-wrapper">
                     <ul class="pulldown">
@@ -55,7 +55,7 @@
                 </div>
                 <p class="btn"><a href="/followerList">フォロワーリスト</a></p>
             </div>
-            <p class="btn"><a href="">ユーザー検索</a></p>
+            <p class="btn"><a href="/search">ユーザー検索</a></p>
         </div>
     </div>
     <footer>

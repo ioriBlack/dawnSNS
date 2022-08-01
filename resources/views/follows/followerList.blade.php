@@ -22,12 +22,11 @@
         <h2 class='page-header'>フォロワーリスト</h2>
         <table class='table table-hover'>
           <tr>
-              <th></th>
-              <th></th>
+
              @foreach ($followers as $follower)
                 <td>{{ $follower->username }}</td>
                 <td>
-                  <a class="btn btn-primary" href="/follows/{{ $follower->username }}/follow">フォロー</a>
+                  <a class="btn btn-primary" href="/follows/{{ $follower->id }}/follow">フォロー</a>
                 </td>
           </tr>
             @endforeach

@@ -39,19 +39,22 @@ Route::post('post/update','PostsController@update');
 Route::get('post/{id}/delete','PostsController@delete');
 
 Route::get('/followerList','PostsController@followerList');
-Route::get('follows/{id}/follow','PostsController@follower');
+Route::get('follows/{id}/follow','PostsController@following');
 //Route::post('post/follower','PostsController@follower');
 //Route::get('follows/{id}/to_follow','PostsController@follower');
 
+Route::get('/top','PostsController@user');
 Route::get('/top','PostsController@index');
-Route::get('/top','PostsController@users');
+
 
 Route::get('/profile','UsersController@profile');
 
-Route::get('/search','UsersController@index');
+Route::get('/search','UsersController@userList');
+Route::post('/search/following','UsersController@following');
+Route::get('/search/user','UsersController@search')->name('search');
 
 Route::get('/followList','PostsController@database');
-
+// Route::get('/search','PostsController@search');
 // Route::get('/follow-list','PostsController@index');
 // Route::get('/follower-list','PostsController@index');
 

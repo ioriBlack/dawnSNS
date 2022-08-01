@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use App\Post;
 use App\Follow;
-use Illuminate\Support\Facades\DB;
 use Auth;
 
 class PostsController extends Controller
@@ -21,11 +23,16 @@ class PostsController extends Controller
         //return view('posts.index');
         //上記は一度コメントアウトしてDAWNから下記の記述を流用
 
-        $posts = DB::table('posts')->get();
-        return view('posts.index',['posts'=>$posts]);
+        $posts = DB::table('posts')
+            ->join('users', 'posts.user_id', '=', 'users.id')
+            ->select('posts.*', 'users.username', 'users.images')
+            ->get();
+
+        return view('posts.index',compact('posts'));
     }
 
-    public function users(){
+    public function user()
+    {
         $users = DB::table('users')->get();
         return view('posts.index',['users'=>$users]);
     }
@@ -35,27 +42,27 @@ class PostsController extends Controller
     //         return view('post.create');
     // }
 
-
     public function followerList()
     {
-        $followers = DB::table('follows')->get();
-        return view('follows.followerList',['followers' => $followers]);
+        $followers = DB::table('follows')
+            ->join('users','follows.follower_id','=','users.id')
+            ->select('follows.*','users.*')
+            ->get();
+
+        return view('follows.followerList',compact('followers'));
+        return redirect('posts.search',compact('followers'));
     }
 
-    public function follower(Request $request)
+    public function following()
     {
-        //$follows = $request->input('newFollower');
-        $username = DB::table('users')->get();
         DB::table('follows')->insert(
-        [
-         'id' => Auth::id(),
-         'follow_id' => Auth::id(),
-         'follower_id' => Auth::id(),
-         'user_id' => Auth::id(),
-         'username' => Auth::id(),
-        ]);
+            [
+            'id' => Auth::id(),
+            'follow_id' => 'follows.id',
+            'follower_id' => Auth::id(),
+            ]);
 
-        return redirect('/followerList');
+        return redirect('/search');
     }
 
     public function createForm()
@@ -106,13 +113,4 @@ class PostsController extends Controller
         return redirect('/top');
     }
 
-    //     public function index(Post $user)
-    // {
-    //         $user = new User;
-    // $all_users = $user->getAllUsers(auth()->user()->id);
-
-    //     return view('posts.index', [
-    //         'all_users'  => $all_users
-    //     ]);
-    // }
 }

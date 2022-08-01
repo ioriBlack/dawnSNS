@@ -20,9 +20,12 @@
 
 {{ Form::label('パスワード') }}
 {{ Form::text('password',null,['class' => 'input']) }}
+@if($errors->has('password'))
+  {{ $errors->first('password') }}
+@endif
 
 {{ Form::label('パスワード確認') }}
-{{ Form::text('password-confirm',null,['class' => 'input']) }}
+{{ Form::text('password_confirmation',null,['class' => 'input']) }}
 
 {{ Form::submit('登録') }}
 
