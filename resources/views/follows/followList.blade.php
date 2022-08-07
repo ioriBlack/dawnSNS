@@ -21,11 +21,11 @@
           <tr>
             @foreach($followsPosts as $followsPost)
               @if($followsPost->images === 'dawn.png')
-              <a href="/view/{{ $followsPost->follow_id }}/profile">
+              <a href="/{{$followsPost->follow_id}}/followsProfile">
               <img src="/images/{{ $followsPost->images }}" alt="image">
               </a>
               @else
-              <a href="">
+              <a href="/{{$followsPost->follow_id}}/followsProfile">
               <img src="{{ asset('storage/images/' . $followsPost->images) }}" alt="image">
               </a>
               @endif

@@ -91,15 +91,15 @@ class UsersController extends Controller
         return back();
     }
 
-    public function followsProfile(){
-        $followsProfile = DB::table('follows')
+    public function followsProfile($id){
+        DB::table('follows')
             ->join('users','follows.follow_id','=','users.id')
             ->join('posts', 'users.id', '=', 'posts.user_id')
-            ->where('follower_id')
+            ->where('follower_id',$id)
             ->select('follows.follow_id','users.id', 'users.username','users.images', 'posts.posts', 'posts.created_at')
             ->get();
 
-        return view('users.followsProfile',compact('followsProfile'));
+        return redirect('/{id}/followsProfile');
     }
 
     public function users(){

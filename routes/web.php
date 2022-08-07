@@ -38,6 +38,8 @@ Route::get('posts/{id}/update-form', 'PostsController@updateForm');
 Route::post('post/update','PostsController@update');
 Route::get('post/{id}/delete','PostsController@delete');
 
+Route::get('/{id}/followsProfile','UsersController@followsProfile');
+
 Route::get('/followerList','PostsController@followerList');
 
 Route::get('follows/{id}/follow','PostsController@following_search');
@@ -61,7 +63,7 @@ Route::get('/search/user','UsersController@search')->name('search');
 Route::get('/profile','UsersController@users');
 Route::post('/profile/update','UsersController@profile_user');
 
-Route::get('/view/{{ $followsPost->follow_id }}/profile','UsersController@followsProfile');
+Route::get('/followsProfile','UsersController@followsProfile');
 // Route::get('/top','PostsController@followsCount')->name('followsCount');
 // Route::get('/top','PostsController@images');
 // Route::get('/search','PostsController@search');
