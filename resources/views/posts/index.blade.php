@@ -10,12 +10,16 @@
     <div class='container'>
         <div class="container">
           <div class="btn-wrapper">
+          </div>
+        </div>
+
+        <div class="tweet">
+          <div class="tweeting">
             <a class="" href="/createForm">
               <img src="images/post.png">
             </a>
-            <!-- <from action="createForm" method="post" class="createBtn">
-              <img src="images/post.png">
-            </from> -->
+            <div class="tweet_icon">
+            </div>
           </div>
         </div>
 
@@ -32,7 +36,11 @@
             @foreach($posts as $post)
             <tr>
                 <td>
+                  @if($post->images === 'dawn.png')
                   <img src="/images/{{ $post->images }}" alt="image">
+                  @else
+                  <img src="{{ asset('storage/images/' . $post->images) }}" alt="image">
+                  @endif
                 </td>
                 <td>{{ $post->posts }}</td>
                 <td>{{ $post->created_at }}</td>

@@ -22,13 +22,34 @@ class PostsController extends Controller
     public function index(){
         //return view('posts.index');
         //上記は一度コメントアウトしてDAWNから下記の記述を流用
-
         $posts = DB::table('posts')
             ->join('users', 'posts.user_id', '=', 'users.id')
             ->select('posts.*', 'users.username', 'users.images')
             ->get();
 
         return view('posts.index',compact('posts'));
+    }
+
+    public function followsCount(){
+
+        $posts = DB::table('posts')
+            ->join('users', 'posts.user_id', '=', 'users.id')
+            ->select('posts.*', 'users.username', 'users.images')
+            ->get();
+
+        $follows_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+        $followers_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+        return view('posts.index',compact('posts'))->with([
+            "posts" => $posts,
+            "follows_count" => $follows_count,
+            "followers_count" => $followers_count,
+        ]);
     }
 
     public function user()
@@ -42,27 +63,61 @@ class PostsController extends Controller
     //         return view('post.create');
     // }
 
-    public function followerList()
-    {
-        $followers = DB::table('follows')
-            ->join('users','follows.follower_id','=','users.id')
-            ->select('follows.*','users.*')
+
+
+    public function followsList(){
+
+        $my_follows = DB::table('follows')
+            ->join('users','follows.follow_id','=','users.id')
+            ->where('follower_id',Auth::id())
+            ->select('username','users.id', 'users.images')
             ->get();
 
-        return view('follows.followerList',compact('followers'));
-        return redirect('posts.search',compact('followers'));
+        $followsPosts = DB::table('follows')
+            ->join('users','follows.follow_id','=','users.id')
+            ->join('posts', 'users.id', '=', 'posts.user_id')
+            ->where('follower_id',Auth::id())
+            ->select('follows.follow_id','users.id', 'users.username','users.images', 'posts.posts', 'posts.created_at')
+            ->get();
+
+        return view('follows.followList',compact('my_follows','followsPosts'));
     }
+//
+    public function followerList()
+    {
+        $my_followers = DB::table('follows')
+            ->join('users','follows.follower_id','=','users.id')
+            ->where('follows.follow_id',Auth::id())
+            ->get();
+
+        return view('follows.followerList',compact('my_followers'));
+    }
+    // public function followerList()
+    // {
+    //     $my_followers = DB::table('follows')
+    //         ->join('users','follows.follower_id','=','users.id')
+    //         ->where('id',Auth::id())
+    //         ->get();
+
+    //     $followers = DB::table('follows')
+    //         ->join('users','follows.follower_id','=','users.id')
+    //         ->select('follows.*','users.*')
+    //         ->get();
+
+    //     return view('follows.followerList',compact('my_followers','followers'));
+    // }
 
     public function following()
     {
-        DB::table('follows')->insert(
+        DB::table('follows')
+        ->insert(
             [
             'id' => Auth::id(),
             'follow_id' => 'follows.id',
             'follower_id' => Auth::id(),
             ]);
 
-        return redirect('/search');
+        return redirect('/search/following');
     }
 
     public function createForm()

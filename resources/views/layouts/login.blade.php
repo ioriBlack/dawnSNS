@@ -25,7 +25,8 @@
         <h1><a href="/top"><img src="images/main_logo.png"></a></h1>
             <div id="iconList">
                 <div id="icon">
-                    <p><?php $users = Auth::user(); ?>{{$users->username}}さん<img class="profileIcon" src="images/dawn.png"></p>
+                    <p><?php $users = Auth::user(); ?>{{$users->username}}さん
+                    <img class="profileIcon" src="images/dawn.png"></p>
                 <div>
                 <div class="pulldown-wrapper">
                     <ul class="pulldown">
@@ -43,15 +44,15 @@
         </div >
         <div id="side-bar">
             <div id="confirm">
-                <p>〇〇さんの</p>
+                <p><?php $users = Auth::user(); ?>{{$users->username}}さんの</p>
                 <div>
                 <p>フォロー数</p>
-                <p>〇〇名</p>
+                {{-- <p>{{ $follows_count }}名</p> --}}
                 </div>
-                <p class="btn"><a href="">フォローリスト</a></p>
+                <p class="btn"><a href="/followsList">フォローリスト</a></p>
                 <div>
                 <p>フォロワー数</p>
-                <p>〇〇名</p>
+                {{-- <p>{{$followers_count}}名</p> --}}
                 </div>
                 <p class="btn"><a href="/followerList">フォロワーリスト</a></p>
             </div>
