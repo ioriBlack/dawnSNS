@@ -36,9 +36,11 @@ Route::post('post/create','PostsController@create');
 Route::get('posts/{id}/update-form', 'PostsController@updateForm');
 
 Route::post('post/update','PostsController@update');
-Route::get('post/{id}/delete','PostsController@delete');
+Route::get('post/{id}/delete','PostsController@index_delete');
+Route::get('/myProfile/{id}/delete','PostsController@delete');
 
 Route::get('/{id}/followsProfile','UsersController@followsProfile');
+Route::get('/myProfile','UsersController@myProfile_type');
 
 Route::get('/followerList','PostsController@followerList');
 

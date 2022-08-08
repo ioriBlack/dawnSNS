@@ -35,6 +35,7 @@
 
             @foreach($posts as $post)
             <tr>
+
                 <td>
                   @if($post->images === 'dawn.png')
                   <img src="/images/{{ $post->images }}" alt="image">
@@ -45,9 +46,16 @@
                 <td>{{ $post->posts }}</td>
                 <td>{{ $post->created_at }}</td>
 
-                 <td><a class="edit" href="/posts/{{ $post->id }}/update-form">
-                  <img class="edit-btn" src="images/edit.png"></a></td>
-                 <td><a class="trash" href="/post/{{ $post->id }}/delete" onclick="return confirm('こちらの投稿を削除してもよろしいでしょうか？')"><img class="trash-btn" src="images/trash_h.png"></a></td>
+                 <!-- <td>
+                  <a class="edit" href="/posts/{{ $post->id }}/update-form">
+                    <img class="edit-btn" src="images/edit.png">
+                  </a>
+                </td>
+                 <td>
+                    <a class="trash" href="/post/{{ $post->id }}/delete" onclick="return confirm('こちらの投稿を削除してもよろしいでしょうか？')">
+                      <img class="trash-btn" src="images/trash_h.png">
+                    </a>
+                </td> -->
 
             </tr>
             @endforeach

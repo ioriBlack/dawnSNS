@@ -92,14 +92,45 @@ class UsersController extends Controller
     }
 
     public function followsProfile($id){
-        DB::table('follows')
+       $followsProfile = DB::table('follows')
             ->join('users','follows.follow_id','=','users.id')
             ->join('posts', 'users.id', '=', 'posts.user_id')
             ->where('follower_id',$id)
             ->select('follows.follow_id','users.id', 'users.username','users.images', 'posts.posts', 'posts.created_at')
             ->get();
 
-        return redirect('/{id}/followsProfile');
+        return view('users.followsProfile',compact('followsProfile'));
+    }
+
+    // public function followsProfile($id){
+    //    $followsProfile = DB::table('follows')
+    //         ->join('users','follows.follow_id','=','users.id')
+    //         ->join('posts', 'users.id', '=', 'posts.user_id')
+    //         ->where('follower_id',$id)
+    //         ->select('follows.follow_id','users.id', 'users.username','users.images', 'posts.posts', 'posts.created_at')
+    //         ->get();
+
+    //     return view('users.followsProfile',compact('followsProfile'));
+    // }
+
+    public function myProfile($id){
+        $myProfiles = DB::table('posts')
+            ->join('users', 'posts.user_id', '=', 'users.id')
+            ->select('posts.*', 'users.username', 'users.images')
+            ->where('follower_id',$id)
+            ->get();
+
+        return view('users.myProfile',compact('myProfiles'));
+    }
+
+    public function myProfile_type(){
+                $myProfiles = DB::table('posts')
+            ->join('users', 'posts.user_id', '=', 'users.id')
+            ->select('posts.*', 'users.username', 'users.images')
+            ->where('user_id',Auth::id())
+            ->get();
+
+            return view('users.myProfile',compact('myProfiles'));
     }
 
     public function users(){
