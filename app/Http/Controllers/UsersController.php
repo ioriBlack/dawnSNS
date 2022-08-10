@@ -35,11 +35,18 @@ class UsersController extends Controller
         //= User::はusersテーブルと紐付いている？？
         $users = User::where("id" , "!=" , Auth::user()->id)->paginate(10);
 
+        $users_table = DB::table('users')
+            ->get();
+
+        $check = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->get();
+
         // $users = DB::table('users')
         // ->where("Auth::id()", '!=','$users_table')
         // ->get();
 
-        return view('posts.search',compact('users'));
+        return view('posts.search',compact('users','check','users_table'));
     }
 
     public function following_search(Request $request){
@@ -52,6 +59,17 @@ class UsersController extends Controller
         ]);
 
         return back();
+    }
+
+    public function unFollow_search(Request $request){
+        $unFollow = $request->input('id');
+
+        DB::table('follows')
+            ->where('follow_id',$unFollow)
+            ->where('follow_id',$unFollow)
+            ->delete();
+
+            return back();
     }
 
     public function following_follows(Request $request){
@@ -139,5 +157,10 @@ class UsersController extends Controller
             ->first();
 
         return view('users.profile',compact('users'));
+    }
+
+    public function getLogout(){
+        Auth::logout();
+        return view('auth.login');
     }
 }

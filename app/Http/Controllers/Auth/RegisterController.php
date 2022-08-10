@@ -103,4 +103,13 @@ class RegisterController extends Controller
     public function added(){
         return view('auth.added');
     }
+
+    public function logout(){
+        return view('auth.register');
+    }
+
+
+    protected function loggedOut(\Illuminate\Http\Request $request){
+        return('/logout');
+    }
 }

@@ -59,18 +59,19 @@ Route::get('/top','PostsController@index');
 Route::get('/profile','UsersController@profile');
 
 Route::get('/search','UsersController@userList');
+// Route::get('/search','FollowsController@followCheck');
 Route::post('/search/following','UsersController@following_search');
+Route::post('/search/unFollow','UsersController@unFollow_search');
 Route::get('/search/user','UsersController@search')->name('search');
 
 Route::get('/profile','UsersController@users');
 Route::post('/profile/update','UsersController@profile_user');
 
 Route::get('/followsProfile','UsersController@followsProfile');
-// Route::get('/top','PostsController@followsCount')->name('followsCount');
-// Route::get('/top','PostsController@images');
-// Route::get('/search','PostsController@search');
-// Route::get('/follow-list','PostsController@index');
-// Route::get('/follower-list','PostsController@index');
 
-// Route::get('/followerList','PostsController@index');
-// Route::get('do_Follow','PostsController@doFollow');
+
+Route::get('/logout','UsersController@getLogout');
+// Route::get('/logout',[
+//   'uses' => 'usersController@getLogout',
+//   'as' => 'auth.register'
+// ]);
