@@ -75,8 +75,6 @@ class UsersController extends Controller
     public function following_follows(Request $request){
         $following = $request->input('id');
 
-
-
         DB::table('follows')
         ->insert([
             'follower_id'=>Auth::id(),
@@ -161,6 +159,6 @@ class UsersController extends Controller
 
     public function getLogout(){
         Auth::logout();
-        return view('auth.login');
+        return view('auth.register');
     }
 }
