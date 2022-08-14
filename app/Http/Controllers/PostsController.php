@@ -27,10 +27,13 @@ class PostsController extends Controller
             ->select('posts.*', 'users.username', 'users.images')
             ->get();
 
-        return view('posts.index',compact('posts'));
+        $my_posts= DB::table('posts')
+        ->where('user_id',Auth::id())->get;
+
+        return view('posts.index',compact('posts','my_posts'));
     }
 
-    public function followsCount(){
+    public function followsCount_index(){
 
         $posts = DB::table('posts')
             ->join('users', 'posts.user_id', '=', 'users.id')
@@ -51,6 +54,29 @@ class PostsController extends Controller
             "followers_count" => $followers_count,
         ]);
     }
+    public function followsCount_search(){
+
+        $posts = DB::table('posts')
+            ->join('users', 'posts.user_id', '=', 'users.id')
+            ->select('posts.*', 'users.username', 'users.images')
+            ->get();
+
+        $follows_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+        $followers_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+        return view('posts.search',compact('posts'))->with([
+            "posts" => $posts,
+            "follows_count" => $follows_count,
+            "followers_count" => $followers_count,
+        ]);
+    }
+
+
 
     public function user()
     {
@@ -80,17 +106,33 @@ class PostsController extends Controller
             ->select('follows.follow_id','users.id', 'users.username','users.images', 'posts.posts', 'posts.created_at')
             ->get();
 
-        return view('follows.followList',compact('my_follows','followsPosts'));
+        $follows_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+        $followers_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+        return view('follows.followList',compact('my_follows','followsPosts','follows_count','followers_count'));
     }
 //
     public function followerList()
     {
+        $follows_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+        $followers_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
         $my_followers = DB::table('follows')
             ->join('users','follows.follower_id','=','users.id')
             ->where('follows.follow_id',Auth::id())
             ->get();
 
-        return view('follows.followerList',compact('my_followers'));
+        return view('follows.followerList',compact('my_followers','follows_count','followers_count'));
     }
     // public function followerList()
     // {
@@ -125,9 +167,8 @@ class PostsController extends Controller
         return view('posts.createForm');
     }
 
-       public function create(Request $request)
-    {
-        $post = $request->input('newPost');
+    public function create_modal(Request $request){
+        $post = $request->input('post');
         DB::table('posts')->insert([
             'user_id' => Auth::id(),
             'posts' => $post,
@@ -135,29 +176,58 @@ class PostsController extends Controller
             'follows_id' =>Auth::id(),
         ]);
 
-        return redirect('/createForm');
-    }
-
-    public function updateForm($id)
-    {
-        $post = DB::table('posts')
-            ->where('id', $id)
-            ->first();
-        return view('posts.updateForm', ['post' => $post]);
-    }
-
-        public function update(Request $request)
-    {
-        $id = $request->input('id');
-        $up_post = $request->input('upPost');
-        DB::table('posts')
-            ->where('id', $id)
-            ->update(
-                ['posts' => $up_post]
-            );
-
         return redirect('/top');
     }
+
+    public function create(Request $request)
+    {
+        $post = $request->input('newPost');
+        DB::table('posts')->insert([
+            'post' => $post
+        ]);
+        return redirect('/index');
+    }
+    // public function updateForm($id)
+    // {
+    //     $post = DB::table('posts')
+    //         ->where('id', $id)
+    //         ->first();
+    //     return view('posts.updateForm', ['post' => $post]);
+    // }
+
+
+    public function update_index($id)
+{
+    DB::table('posts')->get();
+    $post = DB::table('id')
+        ->where('id', $id)
+        ->first();
+    return view('posts.index',compact('post'));
+}
+        public function update_top(Request $request)
+    {
+        $id = $request->input('id');
+            $up_post = $request->input('upPost');
+            DB::table('posts')
+                ->where('id', $id)
+                ->update(
+                    ['post' => $up_post]
+            );
+
+        return back();
+    }
+    //     public function update(Request $request)
+    // {
+    //     $id = $request->input('id');
+    //     $up_post = $request->input('upPost');
+    //     DB::table('posts')
+    //         ->where('id', $id)
+    //         ->update(
+    //             ['posts' => $up_post]
+    //         );
+
+    //     return redirect('/top',compact('id','post'));
+    // }
 
         public function index_delete($id)
     {
@@ -175,5 +245,27 @@ class PostsController extends Controller
             ->delete();
 
         return redirect('/myProfile');
+    }
+
+        public function updateForm($id)
+    {
+        $post_up = DB::table('posts')
+            ->where('id', $id)
+            ->get();
+
+        return view('/top', compact('post_up'));
+    }
+
+        public function update(Request $request)
+    {
+        $id = $request->input('id');
+        $up_post = $request->input('post');
+        DB::table('posts')
+            ->where('id', $id)
+            ->update([
+                'posts' => $up_post,
+            ]);
+
+        return back();
     }
 }

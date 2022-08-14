@@ -28,12 +28,33 @@ class UsersController extends Controller
             $users = DB::table('users')
             ->get();
         }
-        return view('posts.search',compact('users','keyword'));
+
+        $check = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->get();
+
+        $follows_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+        $followers_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+        return view('posts.search',compact('users','keyword','check','follows_count','followers_count'));
     }
 
     public function userList(){
         //= User::はusersテーブルと紐付いている？？
         $users = User::where("id" , "!=" , Auth::user()->id)->paginate(10);
+
+        $follows_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+        $followers_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
 
         $users_table = DB::table('users')
             ->get();
@@ -46,7 +67,7 @@ class UsersController extends Controller
         // ->where("Auth::id()", '!=','$users_table')
         // ->get();
 
-        return view('posts.search',compact('users','check','users_table'));
+        return view('posts.search',compact('users','check','users_table','follows_count','followers_count'));
     }
 
     public function following_search(Request $request){
@@ -94,7 +115,8 @@ class UsersController extends Controller
         $bio = $request->input('bio');
         $iconName = $request->file('icon')->getClientOriginalName();
         $request->file('icon')->storeAs('public/images', $iconName);
-
+//画像がnullの場合更新を行わない処理にしたかった
+        if($iconName->null){
         DB::table('users')
         ->where('id',$id)
         ->update([
@@ -102,8 +124,17 @@ class UsersController extends Controller
             'mail' => $mail,
             'password' => bcrypt($password),
             'bio' => $bio,
+        ]);}
+        else{
+        DB::table('users')
+            ->where('id',$id)
+            ->update([
+            'username' => $name,
+            'mail' => $mail,
+            'password' => bcrypt($password),
+            'bio' => $bio,
             'images' => $iconName,
-        ]);
+            ]);}
         return back();
     }
 
@@ -140,21 +171,36 @@ class UsersController extends Controller
     }
 
     public function myProfile_type(){
-                $myProfiles = DB::table('posts')
+        $myProfiles = DB::table('posts')
             ->join('users', 'posts.user_id', '=', 'users.id')
             ->select('posts.*', 'users.username', 'users.images')
             ->where('user_id',Auth::id())
             ->get();
 
-            return view('users.myProfile',compact('myProfiles'));
+        $follows_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+        $followers_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+            return view('users.myProfile',compact('myProfiles','follows_count','followers_count'));
     }
 
     public function users(){
+        $follows_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+        $followers_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
         $users = DB::table('users')
             ->where('id', Auth::id())
             ->first();
 
-        return view('users.profile',compact('users'));
+        return view('users.profile',compact('users','follows_count','followers_count'));
     }
 
     public function getLogout(){
