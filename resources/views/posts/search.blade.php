@@ -1,6 +1,7 @@
 @extends('layouts.login')
 
 @section('content')
+
 <div class="holder">
   <form  class="search_search" action="/search/user" name="keyword" method="get">
     <input class="searchA" type="text" name="keyword"  placeholder="ユーザー名">
@@ -36,4 +37,5 @@
   @endif
   @endforeach
 </div>
+
 @endsection

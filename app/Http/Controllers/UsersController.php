@@ -142,11 +142,19 @@ class UsersController extends Controller
        $followsProfile = DB::table('follows')
             ->join('users','follows.follow_id','=','users.id')
             ->join('posts', 'users.id', '=', 'posts.user_id')
-            ->where('follower_id',$id)
+            ->where('follow_id',$id)
             ->select('follows.follow_id','users.id', 'users.username','users.images', 'posts.posts', 'posts.created_at')
             ->get();
 
-        return view('users.followsProfile',compact('followsProfile'));
+        $follows_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+        $followers_count = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->count();
+
+        return view('users.followsProfile',compact('followsProfile','follows_count','followers_count'));
     }
 
     // public function followsProfile($id){

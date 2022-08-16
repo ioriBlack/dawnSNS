@@ -1,38 +1,39 @@
 @extends('layouts.login')
-
 @section('content')
-            <div id="follows_icon">
-              @foreach ($my_follows as $follow)
-              @if($follow->images === 'dawn.png')
-              <a href="">
-                <img class="TLicon" src="/images/{{ $follow->images }}" alt="image">
-              </a>
-              @else
-              <a href="">
-                <img class="TLicon" src="{{ asset('storage/images/' . $follow->images) }}" alt="image">
-              </a>
-              @endif
-              @endforeach
-            </div>
+<div class="container">
+  @foreach($followsPosts as $followsPost)
+      <div id="follows_icon">
+        <td>
+          @if($followsPost->images === 'dawn.png')
+                <a href="">
+                  <img class="TLicon" src="/images/{{ $followsPost->images }}" alt="image">
+                </a>
+          @else
+                <a href="">
+                  <img class="TLicon" src="{{ asset('storage/images/' . $followsPost->images) }}" alt="image">
+                </a>
+          @endif
+  @endforeach
+        </td>
+    </div>
 
-<div class='container'>
-        <h2 class='page-header'>フォロワーリスト</h2>
+    @foreach($followsPosts as $followsPost)
         <table class='table table-hover'>
-          <tr>
-            @foreach($followsPosts as $followsPost)
+            <td>
               @if($followsPost->images === 'dawn.png')
-              <a href="/{{$followsPost->follow_id}}/followsProfile">
-              <img src="/images/{{ $followsPost->images }}" alt="image">
-              </a>
+                <a href="/{{$followsPost->follow_id}}/followsProfile">
+                  <img class="TLicon" src="/images/{{ $followsPost->images }}" alt="image">
+                </a>
               @else
-              <a href="/{{$followsPost->follow_id}}/followsProfile">
-              <img src="{{ asset('storage/images/' . $followsPost->images) }}" alt="image">
-              </a>
+                <a href="/{{$followsPost->follow_id}}/followsProfile">
+                  <img class="TLicon" src="{{ asset('storage/images/' . $followsPost->images) }}" alt="image">
+                </a>
+            </td>
               @endif
-              <td>{{$followsPost->posts}}</td>
-              <td>{{$followsPost->created_at}}</td>
+                <td>{{$followsPost->posts}}</td>
+                <td>{{$followsPost->created_at}}</td>
             @endforeach
-          </tr>
+           </td>
         </table>
 </div>
 @endsection
