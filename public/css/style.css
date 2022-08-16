@@ -290,3 +290,8 @@ li {
     height: 30px;
     width: 30px;
 }
+
+.userListSearch{
+    display: flex;
+    flex-wrap: nowrap;
+}

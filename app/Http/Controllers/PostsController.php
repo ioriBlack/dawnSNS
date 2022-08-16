@@ -119,6 +119,13 @@ class PostsController extends Controller
 //
     public function followerList()
     {
+        $followersPosts = DB::table('follows')
+            ->join('users','follows.follower_id','=','users.id')
+            ->join('posts', 'users.id', '=', 'posts.user_id')
+            ->where('follow_id',Auth::id())
+            ->select('follows.follower_id','users.id', 'users.username','users.images', 'posts.*')
+            ->get();
+
         $follows_count = DB::table('follows')
             ->where('follower_id',Auth::id())
             ->count();
@@ -132,7 +139,7 @@ class PostsController extends Controller
             ->where('follows.follow_id',Auth::id())
             ->get();
 
-        return view('follows.followerList',compact('my_followers','follows_count','followers_count'));
+        return view('follows.followerList',compact('my_followers','follows_count','followers_count','followersPosts'));
     }
     // public function followerList()
     // {
@@ -196,18 +203,11 @@ class PostsController extends Controller
     // }
 
 
-    public function update_index($id)
-{
-    DB::table('posts')->get();
-    $post = DB::table('id')
-        ->where('id', $id)
-        ->first();
-    return view('posts.index',compact('post'));
-}
+
         public function update_top(Request $request)
     {
         $id = $request->input('id');
-            $up_post = $request->input('upPost');
+        $up_post = $request->input('post');
             DB::table('posts')
                 ->where('id', $id)
                 ->update(

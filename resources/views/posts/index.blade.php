@@ -1,11 +1,6 @@
 @extends('layouts.login')
 
 @section('content')
-<head>
-    <meta charset='utf-8"'>
-    <link rel='stylesheet' href="{{ asset('/css/app.css') }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
 
  <div class="tweetBox">
 
@@ -66,24 +61,24 @@
 
                 @if($post->user_id == Auth::id())
                  <td>
-                  <a class="edit editOpen" data-target="modal02">
+                  <a class="edit editOpen" data-target="modal{{$post->id}}">
                     <img class="edit-btn" src="images/edit.png">
                   </a>
                 </td>
 
-        <div class="edit-main js-modal" id="modal02">
-          <div class="post-inner">
-            <div class="inner-content">
-              <form action="post/update" method="post">
-              @csrf
-              <input type="hidden" name="id" >
-              <input type="text" name="post" value="" >
-              <input type="submit" value="編集">
-              </form>
-              <a class="modalClose">戻る</a>
-            </div>
-          </div>
-        </div>
+                <div class="edit-main js-modal" id="modal{{$post->id}}">
+                  <div class="post-inner">
+                    <div class="inner-content">
+                      <form action="post/update" method="post">
+                      @csrf
+                      <input type="hidden" name="id" value="{{$post->id}}">
+                      <input type="text" name="post" value="{{$post->posts}}" >
+                      <input type="submit" value="編集">
+                      </form>
+                      <a class="modalClose">戻る</a>
+                    </div>
+                  </div>
+                </div>
 
                  <td>
                     <a class="trash" href="/post/{{ $post->id }}/delete" onclick="return confirm('こちらの投稿を削除してもよろしいでしょうか？')">

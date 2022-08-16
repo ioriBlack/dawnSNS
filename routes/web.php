@@ -33,10 +33,12 @@ Route::get('/added', 'Auth\RegisterController@added');
 //下記追加
 Route::get('/createForm','PostsController@createForm');
 Route::post('post/create','PostsController@create_modal');
-Route::get('/top', 'PostsController@update_index');
+Route::get('/top', 'PostsController@update_top');
 // Route::get('posts/{id}/update-form', 'PostsController@updateForm');
+
 Route::get('/top', 'PostsController@updateForm');
 Route::post('/post/update','PostsController@update');
+
 // Route::post('post/update','PostsController@update');
 Route::get('post/{id}/delete','PostsController@index_delete');
 Route::get('/myProfile/{id}/delete','PostsController@delete');

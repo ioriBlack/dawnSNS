@@ -113,10 +113,10 @@ class UsersController extends Controller
         $mail = $request->input('mail');
         $password = $request->input('password');
         $bio = $request->input('bio');
+        if($request->file('icon')){
         $iconName = $request->file('icon')->getClientOriginalName();
         $request->file('icon')->storeAs('public/images', $iconName);
-//画像がnullの場合更新を行わない処理にしたかった
-        if($iconName->null){
+
         DB::table('users')
         ->where('id',$id)
         ->update([
@@ -124,6 +124,7 @@ class UsersController extends Controller
             'mail' => $mail,
             'password' => bcrypt($password),
             'bio' => $bio,
+            'images' => $iconName,
         ]);}
         else{
         DB::table('users')
@@ -133,7 +134,6 @@ class UsersController extends Controller
             'mail' => $mail,
             'password' => bcrypt($password),
             'bio' => $bio,
-            'images' => $iconName,
             ]);}
         return back();
     }

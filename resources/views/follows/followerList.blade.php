@@ -1,24 +1,35 @@
 @extends('layouts.login')
 @section('content')
-            <div id="search">
-                    <form role="search" action="/followerList" method="get">
-                        <input type="text" name="search" placeholder="ユーザー名で検索">
-                        <button type="submit"><i></i></button>
-                    </form>
+<div class='container'>
+        @foreach($followersPosts as $followersPost)
+            <div id="follows_icon">
+              @if($followersPost->images === 'dawn.png')
+              <a href="">
+                <img class="TLicon" src="/images/{{ $followersPost->images }}" alt="image">
+              </a>
+              @else
+              <a href="">
+                <img class="TLicon" src="{{ asset('storage/images/' . $followersPost->images) }}" alt="image">
+              </a>
+              @endif
             </div>
 
-<div class='container'>
-        <h2 class='page-header'>フォロワーリスト</h2>
+
         <table class='table table-hover'>
           <tr>
-
-             @foreach ($my_followers as $follower)
-                <td>{{ $follower->username }}</td>
-                <td>
-                  <a class="btn btn-primary" href="/follows/{{ $follower->id }}/follow">フォロー</a>
-                </td>
-          </tr>
+              @if($followersPost->images === 'dawn.png')
+              <a href="/{{$followersPost->follower_id}}/followsProfile">
+              <img class="TLicon" src="/images/{{ $followersPost->images }}" alt="image">
+              </a>
+              @else
+              <a href="/{{$followersPost->follower_id}}/followsProfile">
+              <img class="TLicon" src="{{ asset('storage/images/' . $followersPost->images) }}" alt="image">
+              </a>
+              @endif
+              <td>{{$followersPost->posts}}</td>
+              <td>{{$followersPost->created_at}}</td>
             @endforeach
+          </tr>
         </table>
 </div>
 @endsection

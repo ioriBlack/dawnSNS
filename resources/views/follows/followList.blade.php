@@ -5,11 +5,11 @@
               @foreach ($my_follows as $follow)
               @if($follow->images === 'dawn.png')
               <a href="">
-                <img src="/images/{{ $follow->images }}" alt="image">
+                <img class="TLicon" src="/images/{{ $follow->images }}" alt="image">
               </a>
               @else
               <a href="">
-                <img src="{{ asset('storage/images/' . $follow->images) }}" alt="image">
+                <img class="TLicon" src="{{ asset('storage/images/' . $follow->images) }}" alt="image">
               </a>
               @endif
               @endforeach
