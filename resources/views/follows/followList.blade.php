@@ -5,11 +5,11 @@
       <div id="follows_icon">
         <td>
           @if($followsPost->images === 'dawn.png')
-                <a href="">
+                <a href="/{{$followsPost->follow_id}}/followsProfile">
                   <img class="TLicon" src="/images/{{ $followsPost->images }}" alt="image">
                 </a>
           @else
-                <a href="">
+                <a href="/{{$followsPost->follow_id}}/followsProfile">
                   <img class="TLicon" src="{{ asset('storage/images/' . $followsPost->images) }}" alt="image">
                 </a>
           @endif

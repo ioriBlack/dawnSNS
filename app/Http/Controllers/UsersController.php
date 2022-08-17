@@ -24,7 +24,7 @@ class UsersController extends Controller
             $users = DB::table('users')
             ->where('username','LIKE',"%{$keyword}%")
             ->get();
-        }else{
+        }elseif(request('keyword','=','empty')){
             $users = DB::table('users')
             ->get();
         }
@@ -146,6 +146,14 @@ class UsersController extends Controller
             ->select('follows.follow_id','users.id', 'users.username','users.images', 'posts.posts', 'posts.created_at')
             ->get();
 
+        $check = DB::table('follows')
+            ->where('follower_id',Auth::id())
+            ->get();
+
+        $images = DB::table('users')
+        ->where('id',$id)
+        ->first();
+
         $follows_count = DB::table('follows')
             ->where('follower_id',Auth::id())
             ->count();
@@ -154,7 +162,7 @@ class UsersController extends Controller
             ->where('follower_id',Auth::id())
             ->count();
 
-        return view('users.followsProfile',compact('followsProfile','follows_count','followers_count'));
+        return view('users.followsProfile',compact('followsProfile','follows_count','followers_count','images','check'));
     }
 
     // public function followsProfile($id){
