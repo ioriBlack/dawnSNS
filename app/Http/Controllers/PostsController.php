@@ -25,12 +25,17 @@ class PostsController extends Controller
         $posts = DB::table('posts')
             ->join('users', 'posts.user_id', '=', 'users.id')
             ->select('posts.*', 'users.username', 'users.images')
+            ->orderBy('posts.create_at','desc')
             ->get();
 
         $my_posts= DB::table('posts')
-        ->where('user_id',Auth::id())->get;
+        ->where('user_id',Auth::id())->get();
 
-        return view('posts.index',compact('posts','my_posts'));
+        $images = DB::table('users')
+        ->where('users.id',Auth::id())
+        ->get();
+
+        return view('posts.index',compact('posts','my_posts','images'));
     }
 
     public function followsCount_index(){
@@ -45,7 +50,7 @@ class PostsController extends Controller
             ->count();
 
         $followers_count = DB::table('follows')
-            ->where('follower_id',Auth::id())
+            ->where('follow_id',Auth::id())
             ->count();
 
         return view('posts.index',compact('posts'))->with([
@@ -66,7 +71,7 @@ class PostsController extends Controller
             ->count();
 
         $followers_count = DB::table('follows')
-            ->where('follower_id',Auth::id())
+            ->where('follow_id',Auth::id())
             ->count();
 
         return view('posts.search',compact('posts'))->with([
@@ -104,6 +109,7 @@ class PostsController extends Controller
             ->join('posts', 'users.id', '=', 'posts.user_id')
             ->where('follower_id',Auth::id())
             ->select('follows.follow_id','users.id', 'users.username','users.images', 'posts.posts', 'posts.created_at')
+            ->orderBy('posts.created_at','desc')
             ->get();
 
         $follows_count = DB::table('follows')
@@ -111,7 +117,7 @@ class PostsController extends Controller
             ->count();
 
         $followers_count = DB::table('follows')
-            ->where('follower_id',Auth::id())
+            ->where('follow_id',Auth::id())
             ->count();
 
         return view('follows.followList',compact('my_follows','followsPosts','follows_count','followers_count'));
@@ -124,6 +130,7 @@ class PostsController extends Controller
             ->join('posts', 'users.id', '=', 'posts.user_id')
             ->where('follow_id',Auth::id())
             ->select('follows.follower_id','users.id', 'users.username','users.images', 'posts.*')
+            ->orderBy('posts.created_at','desc')
             ->get();
 
         $follows_count = DB::table('follows')
@@ -131,7 +138,7 @@ class PostsController extends Controller
             ->count();
 
         $followers_count = DB::table('follows')
-            ->where('follower_id',Auth::id())
+            ->where('follow_id',Auth::id())
             ->count();
 
         $my_followers = DB::table('follows')

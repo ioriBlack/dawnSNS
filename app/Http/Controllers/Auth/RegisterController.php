@@ -65,6 +65,7 @@ class RegisterController extends Controller
             'password-confirm.min:8' => '8文字以上で入力してください',
             'password-confirm.same:password' => 'パスワードと確認用パスワードが一致していません',
         ])->validate();
+        return view('auth.register');
     }
 
     /**

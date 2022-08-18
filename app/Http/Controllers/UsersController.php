@@ -18,13 +18,20 @@ class UsersController extends Controller
         return view('users.profile');
     }
 
+    public function userImage(){
+    $userImage = DB::table('users')
+        ->where('user_id',Auth::id())
+        ->get();
+        return view('posts.index',compact('userImage'));
+    }
+
     public function search(Request $request){
+        $keyword = $request->input('keyword');
         if(request('keyword')){
-            $keyword = $request->input('keyword');
             $users = DB::table('users')
             ->where('username','LIKE',"%{$keyword}%")
             ->get();
-        }elseif(request('keyword','=','empty')){
+        }else{
             $users = DB::table('users')
             ->get();
         }
@@ -38,7 +45,7 @@ class UsersController extends Controller
             ->count();
 
         $followers_count = DB::table('follows')
-            ->where('follower_id',Auth::id())
+            ->where('follow_id',Auth::id())
             ->count();
 
         return view('posts.search',compact('users','keyword','check','follows_count','followers_count'));
@@ -53,7 +60,7 @@ class UsersController extends Controller
             ->count();
 
         $followers_count = DB::table('follows')
-            ->where('follower_id',Auth::id())
+            ->where('follow_id',Auth::id())
             ->count();
 
         $users_table = DB::table('users')
@@ -144,6 +151,7 @@ class UsersController extends Controller
             ->join('posts', 'users.id', '=', 'posts.user_id')
             ->where('follow_id',$id)
             ->select('follows.follow_id','users.id', 'users.username','users.images', 'posts.posts', 'posts.created_at')
+            ->orderBy('posts.created_at','desc')
             ->get();
 
         $check = DB::table('follows')
@@ -159,7 +167,7 @@ class UsersController extends Controller
             ->count();
 
         $followers_count = DB::table('follows')
-            ->where('follower_id',Auth::id())
+            ->where('follow_id',Auth::id())
             ->count();
 
         return view('users.followsProfile',compact('followsProfile','follows_count','followers_count','images','check'));

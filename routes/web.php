@@ -20,6 +20,7 @@
 
 
 //ログアウト中のページ
+Route::get('/logout','Auth\RegisterController@validator');
 Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 
@@ -28,9 +29,10 @@ Route::post('/register', 'Auth\RegisterController@register');
 
 Route::get('/added', 'Auth\RegisterController@added');
 
-
 //ログイン中のページ
 //下記追加
+// Route::get('/top','UsersController@userImage');
+
 Route::get('/createForm','PostsController@createForm');
 Route::post('post/create','PostsController@create_modal');
 Route::get('/top', 'PostsController@update_top');

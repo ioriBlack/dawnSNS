@@ -6,25 +6,25 @@
 
 <h2>新規ユーザー登録</h2>
 
-{{ Form::label('ユーザー名') }}
+<label>User Name</label>
 {{ Form::text('username',null,['class' => 'input']) }}
 @if($errors->has('username'))
   {{ $errors->first('username') }}
 @endif
 
-{{ Form::label('メールアドレス') }}
+<label>Mail Adress</label>
 {{ Form::text('mail',null,['class' => 'input']) }}
 @if($errors->has('mail'))
   {{ $errors->first('mail') }}
 @endif
 
-{{ Form::label('パスワード') }}
+<label>Password</label>
 {{ Form::text('password',null,['class' => 'input']) }}
 @if($errors->has('password'))
   {{ $errors->first('password') }}
 @endif
 
-{{ Form::label('パスワード確認') }}
+<label>Password Confirm</label>
 {{ Form::text('password_confirmation',null,['class' => 'input']) }}
 
 {{ Form::submit('登録') }}

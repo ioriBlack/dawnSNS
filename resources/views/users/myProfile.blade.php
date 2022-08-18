@@ -1,7 +1,7 @@
 @extends('layouts.login')
 
 @section('content')
-
+<div class="container">
         <h2 class='page-header'>投稿一覧</h2>
         <a href="/profile">編集</a>
         <table class='table table-hover'>
@@ -17,11 +17,12 @@
             <tr>
                 <td>
                   @if($myProfile->images === 'dawn.png')
-                  <img src="/images/{{ $myProfile->images }}" alt="image">
+                  <img class="TLicon" src="/images/{{ $myProfile->images }}" alt="image">
                   @else
-                  <img src="{{ asset('storage/images/' . $myProfile->images) }}" alt="image">
+                  <img class="TLicon" src="{{ asset('storage/images/' . $myProfile->images) }}" alt="image">
                   @endif
                 </td>
+                <td>{{ $myProfile->username }}</td>
                 <td>{{ $myProfile->posts }}</td>
                 <td>{{ $myProfile->created_at }}</td>
 
@@ -32,5 +33,5 @@
             </tr>
             @endforeach
         </table>
-
+</div>
 @endsection

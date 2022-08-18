@@ -4,9 +4,15 @@
 
  <div class="tweetBox">
 
-                  <a class="topicon" href="/myProfile">
-                    <img class="profileIcon" src="images/dawn.png">
-                  </a>
+                          <a href="/top"><?php $images = Auth::user(); ?>
+            <td>
+                  @if($images->images === 'dawn.png')
+                  <img class="topicon TLicon" src="/images/{{ $images->images }}" alt="image">
+                  @else
+                  <img class="topicon TLicon" src="{{ asset('storage/images/' . $images->images) }}" alt="image">
+                  @endif
+            </td>
+        </a>
 
           <div class="holder">
             <h5 class="whatTweet">何をつぶやこうか…</h5>
@@ -56,6 +62,7 @@
                   <img class="TLicon" src="{{ asset('storage/images/' . $post->images) }}" alt="image">
                   @endif
                 </td>
+                <td>{{ $post->username }}</td>
                 <td>{{ $post->posts }}</td>
                 <td>{{ $post->created_at }}</td>
 

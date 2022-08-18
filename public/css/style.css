@@ -295,3 +295,9 @@ li {
     display: flex;
     flex-wrap: nowrap;
 }
+
+.login-wrapper{
+    background-color: #fff;
+    display: flex;
+    flex-wrap: nowrap;
+}

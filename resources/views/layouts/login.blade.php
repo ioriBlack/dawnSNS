@@ -31,9 +31,15 @@
                 <p class="username"><?php $users = Auth::user(); ?>{{$users->username}}さん</p>
 
                 <div id="icon">
-                  <a href="/myProfile">
-                    <img class="profileIcon" src="images/dawn.png">
-                  </a>
+                          <a href="/top"><?php $images = Auth::user(); ?>
+            <td>
+                  @if($images->images === 'dawn.png')
+                  <img class="TLicon" src="/images/{{ $images->images }}" alt="image">
+                  @else
+                  <img class="TLicon" src="{{ asset('storage/images/' . $images->images) }}" alt="image">
+                  @endif
+            </td>
+        </a>
                 <div>
 
                 <div class="openBtn">

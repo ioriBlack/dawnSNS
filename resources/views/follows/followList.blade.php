@@ -30,6 +30,7 @@
                 </a>
             </td>
               @endif
+                <td>{{$followsPost->username}}</td>
                 <td>{{$followsPost->posts}}</td>
                 <td>{{$followsPost->created_at}}</td>
             @endforeach

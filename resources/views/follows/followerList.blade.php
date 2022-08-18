@@ -31,11 +31,11 @@
               </a>
             </td>
               @endif
+              <td>{{$followersPost->username}}</td>
               <td>{{$followersPost->posts}}</td>
               <td>{{$followersPost->created_at}}</td>
             @endforeach
           </td>
         </table>
 </div>
-
 @endsection
