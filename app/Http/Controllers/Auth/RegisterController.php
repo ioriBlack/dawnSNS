@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -52,6 +54,7 @@ class RegisterController extends Controller
             'username' => 'required|string|max:12',
             'mail' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:4|confirmed',
+            'password_confirmation' => 'required|string|min:4|confirmed',
         ],[
             //messages
             'username.required' => '必須項目です',
@@ -60,10 +63,11 @@ class RegisterController extends Controller
             'email.required' => '必須項目です',
             'email.email' => 'メールアドレスではありません',
             'password.required' => '必須項目です',
-            'password.min:8' => '8文字以上で入力してください',
-            'password-confirm.required' => '必須項目です',
-            'password-confirm.min:8' => '8文字以上で入力してください',
-            'password-confirm.same:password' => 'パスワードと確認用パスワードが一致していません',
+            'password.min' => '4文字以上で入力してください',
+            'password_confirmation.required' => '必須項目です',
+            'password_confirmation.min' => '4文字以上で入力してください',
+            'password_confirmation.same:password' => 'パスワードと確認用パスワードが一致していません',
+            'password_confirmation' => 'パスワードと確認用パスワードが一致していません',
         ])->validate();
         return view('auth.register');
     }
@@ -96,12 +100,14 @@ class RegisterController extends Controller
             $this->validator($data);
 
             $this->create($data);
-            return redirect('added');
+            return redirect('added')->with('username',$data['username']);
         }
         return view('auth.register');
     }
 
-    public function added(){
+    public function added(Request $request){
         return view('auth.added');
     }
+
+
 }

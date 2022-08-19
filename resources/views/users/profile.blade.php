@@ -1,9 +1,13 @@
 @extends('layouts.login')
 
 @section('content')
-<a class="topicon_profile" href="/myProfile">
-                    <img class="profileIcon" src="images/dawn.png">
-                  </a>
+<a class="topicon_profile">
+                  @if($users->images === 'dawn.png')
+                  <img class="topicon TLicon" src="/images/{{ $users->images }}" alt="image">
+                  @else
+                  <img class="topicon TLicon" src="{{ asset('storage/images/' . $users->images) }}" alt="image">
+                  @endif
+</a>
 {{Form::open(['url' => '/profile/update', 'files' => true])}}
   @csrf
   <div class="container">

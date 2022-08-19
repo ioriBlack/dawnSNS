@@ -15,7 +15,11 @@ class UsersController extends Controller
 {
 
     public function profile(){
-        return view('users.profile');
+    $users = DB::table('users')
+        ->where('users.id',Auth::id())
+        ->get();
+
+        return view('users.profile',compact('images'));
     }
 
     public function userImage(){
@@ -206,7 +210,7 @@ class UsersController extends Controller
             ->count();
 
         $followers_count = DB::table('follows')
-            ->where('follower_id',Auth::id())
+            ->where('follow_id',Auth::id())
             ->count();
 
             return view('users.myProfile',compact('myProfiles','follows_count','followers_count'));
@@ -218,8 +222,9 @@ class UsersController extends Controller
             ->count();
 
         $followers_count = DB::table('follows')
-            ->where('follower_id',Auth::id())
+            ->where('follow_id',Auth::id())
             ->count();
+
         $users = DB::table('users')
             ->where('id', Auth::id())
             ->first();
@@ -229,6 +234,6 @@ class UsersController extends Controller
 
     public function getLogout(){
         Auth::logout();
-        return view('auth.register');
+        return view('auth.login');
     }
 }

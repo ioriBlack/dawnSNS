@@ -104,6 +104,12 @@ class PostsController extends Controller
             ->select('username','users.id', 'users.images')
             ->get();
 
+
+        $usersimages = DB::table('users')
+            ->join('follows','users.id','=','follows.follow_id')
+            ->where('follower_id',Auth::id())
+            ->get();
+
         $followsPosts = DB::table('follows')
             ->join('users','follows.follow_id','=','users.id')
             ->join('posts', 'users.id', '=', 'posts.user_id')
@@ -120,7 +126,7 @@ class PostsController extends Controller
             ->where('follow_id',Auth::id())
             ->count();
 
-        return view('follows.followList',compact('my_follows','followsPosts','follows_count','followers_count'));
+        return view('follows.followList',compact('my_follows','followsPosts','follows_count','followers_count','usersimages'));
     }
 //
     public function followerList()
@@ -275,4 +281,11 @@ class PostsController extends Controller
 
         return back();
     }
+
+    // public function usersimage(){
+    //     $usersimage = DB::table('users')
+    //     ->where('id',Auth::id())
+    //     ->get();
+    //     return view('users.profile',compact('usersimage'));
+    // }
 }

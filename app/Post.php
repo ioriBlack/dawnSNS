@@ -9,15 +9,15 @@ class Post extends Model
     //
     use HasFactory;
 
-    public function user()
-    {
-        //return $this->hasMany('App/User');
-        return $this->belongsTo(User::class);
-    }
+    // public function user()
+    // {
+    //     //return $this->hasMany('App/User');
+    //     return $this->belongsTo(User::class);
+    // }
 
-    public function follow()
-    {
-        //return $this->belongsTo('App/Follow');
-        return $this->belongsTo(Follow::class);
-    }
+    // public function follow()
+    // {
+    //     //return $this->belongsTo('App/Follow');
+    //     return $this->belongsTo(Follow::class);
+    // }
 }

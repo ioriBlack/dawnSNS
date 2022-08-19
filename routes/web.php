@@ -16,16 +16,18 @@
 // });
 // Route::get('/home', 'HomeController@index')->name('home');
 
-//Auth::routes();
+// Auth::routes();
 
 
 //ログアウト中のページ
-Route::get('/logout','Auth\RegisterController@validator');
+// Route::get('/logout','Auth\RegisterController@validator');
 Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 
+
 Route::get('/register', 'Auth\RegisterController@register');
 Route::post('/register', 'Auth\RegisterController@register');
+
 
 Route::get('/added', 'Auth\RegisterController@added');
 
@@ -75,7 +77,7 @@ Route::get('/profile','UsersController@users');
 Route::post('/profile/update','UsersController@profile_user');
 
 Route::get('/followsProfile','UsersController@followsProfile');
-
+// Route::get('/profile','PostsController@usersimage');
 
 Route::get('/logout','UsersController@getLogout');
 // Route::get('/logout',[

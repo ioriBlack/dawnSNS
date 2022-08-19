@@ -301,3 +301,9 @@ li {
     display: flex;
     flex-wrap: nowrap;
 }
+
+.register{
+    display: flexbox;
+    flex-wrap: nowrap;
+    background-color: #fff;
+}
