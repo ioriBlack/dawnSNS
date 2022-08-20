@@ -120,41 +120,46 @@ class UsersController extends Controller
     public function profile_user(Request $request){
 
         $id = $request->input('id');
-        $name = $request->input('name');
+        $name = $request->input('username');
         $mail = $request->input('mail');
         $password = $request->input('password');
+        // $newPassword = $request->input('newPassword');
         $bio = $request->input('bio');
         if($request->file('icon')){
-        $iconName = $request->file('icon')->getClientOriginalName();
-        $request->file('icon')->storeAs('public/images', $iconName);
+            $iconName = $request->file('icon')->getClientOriginalName();
+            $request->file('icon')->storeAs('public/images', $iconName);
 
-        DB::table('users')
-        ->where('id',$id)
-        ->update([
-            'username' => $name,
-            'mail' => $mail,
-            'password' => bcrypt($password),
-            'bio' => $bio,
-            'images' => $iconName,
-        ]);}
-        else{
+            DB::table('users')
+            ->where('id',$id)
+            ->update([
+                'images' => $iconName,
+            ]);
+            return back();
+        }
+
+        if($request->input('password')){
+            DB::table('users')
+                ->where('id',$id)
+                ->update([
+                    'password' => bcrypt($password),
+                ]);
+                return back();
+        }
         DB::table('users')
             ->where('id',$id)
             ->update([
             'username' => $name,
             'mail' => $mail,
-            'password' => bcrypt($password),
             'bio' => $bio,
-            ]);}
+            ]);
         return back();
     }
 
     public function followsProfile($id){
-       $followsProfile = DB::table('follows')
-            ->join('users','follows.follow_id','=','users.id')
+       $followsProfile = DB::table('users')
             ->join('posts', 'users.id', '=', 'posts.user_id')
-            ->where('follow_id',$id)
-            ->select('follows.follow_id','users.id', 'users.username','users.images', 'posts.posts', 'posts.created_at')
+            ->where('posts.user_id',$id)
+            ->select('users.id', 'users.username','users.images', 'posts.posts', 'posts.created_at')
             ->orderBy('posts.created_at','desc')
             ->get();
 
@@ -234,6 +239,6 @@ class UsersController extends Controller
 
     public function getLogout(){
         Auth::logout();
-        return view('auth.login');
+        return redirect('/login');
     }
 }

@@ -14,13 +14,16 @@
   <div class="E">
 <input type="hidden" name="id" value="{{ $users->id }}">
 <label>User Name</label>
-<input type="text" name="name" value="{{ $users->username }}">
+<input type="text" name="username" value="{{ $users->username }}">
 <br>
 <label>Mail Address</label>
 <input type="email" name="mail" value="{{ $users->mail }}">
 <br>
 <label>Password</label>
-<input type="password" name="password" value="{{ $users->password }}">
+<input type="password" name="now_password" value="{{ $users->password }}" readonly>
+<br>
+<label>New Password</label>
+<input type="password" name="password" >
 <br>
 <label>Bio</label>
 <input type="text" name="bio" value="{{ $users->bio }}">

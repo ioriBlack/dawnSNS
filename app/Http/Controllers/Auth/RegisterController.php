@@ -48,13 +48,30 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+    protected function validator_edit(array $data){
+        return Validator::make($data,[
+            'user' => 'required|string|max12',
+            'mail' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:4|confirmed',
+        ],[
+             'username.required' => '必須項目です',
+            'mail.required' => '必須項目です',
+            'password.required' => '必須項目です',
+            'email.required' => '必須項目です',
+            'email.email' => 'メールアドレスではありません',
+            'password.required' => '必須項目です',
+            'password.min' => '4文字以上で入力してください',
+        ])->validate();
+        return view('users.profile');
+    }
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'username' => 'required|string|max:12',
             'mail' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:4|confirmed',
-            'password_confirmation' => 'required|string|min:4|confirmed',
+            'password_confirmation' => 'required|string|min:4',
         ],[
             //messages
             'username.required' => '必須項目です',
@@ -67,7 +84,7 @@ class RegisterController extends Controller
             'password_confirmation.required' => '必須項目です',
             'password_confirmation.min' => '4文字以上で入力してください',
             'password_confirmation.same:password' => 'パスワードと確認用パスワードが一致していません',
-            'password_confirmation' => 'パスワードと確認用パスワードが一致していません',
+            'password.confirmed' => 'パスワードと確認用パスワードが一致していません',
         ])->validate();
         return view('auth.register');
     }
